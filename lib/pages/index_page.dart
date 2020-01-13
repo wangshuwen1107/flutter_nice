@@ -5,7 +5,7 @@ import 'category_page.dart';
 import 'cart_page.dart';
 import 'member_page.dart';
 import 'package:dio/dio.dart';
-
+import 'test_page.dart';
 class IndexPage extends StatefulWidget {
   @override
   _IndexPageState createState() => _IndexPageState();
@@ -40,7 +40,6 @@ class _IndexPageState extends State<IndexPage> {
     getRequest();
   }
 
-  //so easy
   getRequest() async {
     try {
       Response response = await Dio().get("https://www.easy-mock.com/mock/5e1aa40eedb71e73148360dc/sunshine/home");
@@ -54,14 +53,14 @@ class _IndexPageState extends State<IndexPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: currentIndex,
-          items: bottomTabList,
-          fixedColor: Colors.lightBlue,
-          onTap: onTabSelected,
-      ),
-      body: currentPage,
+//      bottomNavigationBar: BottomNavigationBar(
+//          type: BottomNavigationBarType.fixed,
+//          currentIndex: currentIndex,
+//          items: bottomTabList,
+//          fixedColor: Colors.lightBlue,
+//          onTap: onTabSelected,
+//      ),
+      body: TestPage(),
     );
   }
 }
