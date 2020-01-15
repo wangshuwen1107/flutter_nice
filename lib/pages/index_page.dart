@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:base/entity/request_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_page.dart';
@@ -6,6 +7,7 @@ import 'monitoring_page.dart';
 import 'circle_page.dart';
 import 'mine_page.dart';
 import 'compare_page.dart';
+import 'package:base/request/http_request.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -37,8 +39,8 @@ class _IndexPageState extends State<IndexPage> {
         "我的", "images/tabbar_me_light.png", "images/tabbar_me_dark.png")
   ];
 
-  static _buildBarItem(
-      String title, String lightIconPath, String darkIconPath) {
+  static _buildBarItem(String title, String lightIconPath,
+      String darkIconPath) {
     return BottomNavigationBarItem(
       icon: Image.asset(darkIconPath,
           width: bottomIconSize, height: bottomIconSize),
@@ -62,9 +64,8 @@ class _IndexPageState extends State<IndexPage> {
       currentIndex = index;
       currentPage = pageList[currentIndex];
     });
-//    HttpRequest.get("/home")
-//        .then((val) => {print('then$val')})
-//        .catchError((error) => {print('catchError=$error')});
+
+    HttpRequest.instance().post("/functions/home").then((val) => print('GAGA$val')).catchError((e)=>print('EEEEEE$e'));
   }
 
   @override

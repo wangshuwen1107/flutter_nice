@@ -1,24 +1,31 @@
-import 'dart:ffi';
-
 import 'package:base/request/base_request.dart';
 import 'package:base/request/http_request.dart';
 import 'package:dio/dio.dart';
 
 class PostRequest extends BaseRequest {
-
   Map<String, dynamic> bodyMap;
   String contentType;
 
-  PostRequest.form(String path, Map<String, dynamic> paramsMap, {this.bodyMap})
-      : super.form(path, paramsMap);
+  PostRequest.form(String path,
+      {Map<String, dynamic> paramsMap,
+      Map<String, dynamic> headerMap,
+      this.contentType,
+      this.bodyMap})
+      : super.form(path, paramsMap: paramsMap, headerMap: headerMap);
 
-  @override
-  Future enqueue() async {
+  Future<Response> enqueue() async {
     return await HttpRequest.instance().dio.post(path,
         queryParameters: paramsMap,
-        options: contentType != null ? Options(contentType: contentType) : null,
+        options: getOption(),
         data: FormData.fromMap(bodyMap));
   }
 
-
+  Options getOption() {
+    Options options = Options();
+    if (null != contentType) {
+      options.contentType = contentType;
+    }
+    options.headers = headerMap;
+    return options;
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:base/entity/request_data.dart';
 import 'package:base/request/get_request.dart';
+import 'package:base/request/post_request.dart';
 import 'package:dio/dio.dart';
 
 class HttpRequest {
@@ -12,7 +13,10 @@ class HttpRequest {
   factory HttpRequest.instance() => _getInstance();
 
   HttpRequest._internal() {
-    dio = Dio(BaseOptions(connectTimeout: 15000, baseUrl: BASE_URL));
+    dio = Dio(BaseOptions(connectTimeout: 15000, baseUrl: BASE_URL, headers: {
+      'x-parse-application-id': 'K2Dw31SA6bpDIDWEQQe409F8Bkp1PuPYnFqDiHDL',
+      'x-parse-installation-id': 'a08cf4f3-2ba4-44cb-8752-a7fdb464864b',
+    }));
     if (!inProduction) {
       dio.interceptors
           .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
@@ -34,7 +38,6 @@ class HttpRequest {
     }
   }
 
-  /// 获取单例内部方法
   static _getInstance() {
     if (_instance == null) {
       _instance = HttpRequest._internal();
@@ -42,36 +45,47 @@ class HttpRequest {
     return _instance;
   }
 
-  get(String path, [Map<String, dynamic> paramsMap]) async {
-    await GetRequest.form(path, paramsMap)
-        .enqueue()
-        .then((Response response) {
-          if(response.statusCode<200){
-          }
-         })
-        .catchError((Error response) => {});
+  Future<RequestData> get(String path, [Map<String, dynamic> paramsMap]) async {
+    await GetRequest.form(path).enqueue().then((Response response) {
+      if (response.statusCode < 200 || null == response.data) {
+        return RequestData(
+            success: false,
+            errorMsg: '${response.statusMessage}',
+            errorCode: '${response.statusCode}');
+      } else {
+        return RequestData(success: true, data: response.data['data']);
+      }
+    }).catchError((DioError dioError) {
+      return RequestData(
+          success: false,
+          errorMsg: '${dioError.type.toString()}',
+          errorCode: '${dioError.message}');
+    });
+    return RequestData(success: false, errorCode: 'LOCAL_ERROR');
   }
 
-
-//  static request(String path, [Map<String, dynamic> query]) async {
-//    Response response;
-//    try {
-//      response = await di.request(path, queryParameters: query);
-//    } on DioError catch (e) {
-//      return RequestData(
-//          errorCode: e.type.toString(), errorMsg: e.message, success: false);
-//    }
-//    if (null == response || null == response.data) {
-//      return RequestData(errorCode: "empty", errorMsg: "empty", success: false);
-//    }
-//    //业务上的错误
-//    var bizRep = response.data;
-//    if (!bizRep['success']) {
-//      return RequestData(
-//          success: false,
-//          errorMsg: bizRep['errorMsg'],
-//          errorCode: bizRep['errorCode']);
-//    }
-//    return RequestData(success: true, data: bizRep['data']);
-//  }
+  Future<RequestData> post(String path,
+      [Map<String, dynamic> paramsMap,
+      Map<String, dynamic> bodyMap,
+      String contentType]) async {
+    await PostRequest.form(path,
+            paramsMap: paramsMap, bodyMap: bodyMap, contentType: contentType)
+        .enqueue()
+        .then((Response response) {
+      if (response.statusCode < 200 || null == response.data) {
+        return RequestData(
+            success: false,
+            errorMsg: '${response.statusMessage}',
+            errorCode: '${response.statusCode}');
+      } else {
+        return RequestData(success: true, data: response.data['result']);
+      }
+    }).catchError((error) {
+      print('ERROR =' + error.toString());
+      return RequestData(
+          success: false,
+          errorMsg: error.toString(),
+          errorCode: error.toString());
+    });
+  }
 }
