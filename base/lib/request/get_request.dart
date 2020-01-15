@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:base/request/base_request.dart';
 import 'package:base/request/http_request.dart';
 import 'package:dio/dio.dart';

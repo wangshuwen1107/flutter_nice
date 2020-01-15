@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_page.dart';
@@ -5,7 +6,6 @@ import 'monitoring_page.dart';
 import 'circle_page.dart';
 import 'mine_page.dart';
 import 'compare_page.dart';
-import 'package:base/http_request.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -62,9 +62,9 @@ class _IndexPageState extends State<IndexPage> {
       currentIndex = index;
       currentPage = pageList[currentIndex];
     });
-    HttpRequest.get("/home")
-        .then((val) => {print('then$val')})
-        .catchError((error) => {print('catchError=$error')});
+//    HttpRequest.get("/home")
+//        .then((val) => {print('then$val')})
+//        .catchError((error) => {print('catchError=$error')});
   }
 
   @override

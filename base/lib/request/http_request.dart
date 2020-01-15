@@ -45,7 +45,10 @@ class HttpRequest {
   get(String path, [Map<String, dynamic> paramsMap]) async {
     await GetRequest.form(path, paramsMap)
         .enqueue()
-        .then((Response response) => {})
+        .then((Response response) {
+          if(response.statusCode<200){
+          }
+         })
         .catchError((Error response) => {});
   }
 
