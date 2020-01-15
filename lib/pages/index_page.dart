@@ -1,30 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_page.dart';
-import 'category_page.dart';
-import 'cart_page.dart';
-import 'member_page.dart';
-import 'package:dio/dio.dart';
-import 'test_page.dart';
+import 'monitoring_page.dart';
+import 'circle_page.dart';
+import 'mine_page.dart';
+import 'compare_page.dart';
+import 'package:base/http_request.dart';
+
 class IndexPage extends StatefulWidget {
   @override
   _IndexPageState createState() => _IndexPageState();
 }
 
 class _IndexPageState extends State<IndexPage> {
-  List<BottomNavigationBarItem> bottomTabList = [
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), title: Text("首页1")),
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.bookmark_solid), title: Text("分类")),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.car), title: Text("car")),
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.person), title: Text("个人"))
+  static const bottomIconSize = 28.0;
+  List pageList = [
+    HomePage(),
+    MonitoringPage(),
+    CirclePage(),
+    ComparePage(),
+    MinePage()
   ];
-
-  List pageList = [HomePage(), CategoryPage(), CartPage(), MemberPage()];
-
   var currentIndex = 0;
   var currentPage;
+
+  List<BottomNavigationBarItem> bottomTabList = [
+    _buildBarItem(
+        "首页", "images/tabbar_home_light.png", "images/tabbar_home_dark.png"),
+    _buildBarItem("监控", "images/tabbar_monitoring_light.png",
+        "images/tabbar_monitoring_dark.png"),
+    _buildBarItem("比价", "images/tabbar_compare_light.png",
+        "images/tabbar_compare_dark.png"),
+    _buildBarItem("圈子", "images/tabbar_circle_light.png",
+        "images/tabbar_circle_dark.png"),
+    _buildBarItem(
+        "我的", "images/tabbar_me_light.png", "images/tabbar_me_dark.png")
+  ];
+
+  static _buildBarItem(
+      String title, String lightIconPath, String darkIconPath) {
+    return BottomNavigationBarItem(
+      icon: Image.asset(darkIconPath,
+          width: bottomIconSize, height: bottomIconSize),
+      activeIcon: Image.asset(lightIconPath,
+          width: bottomIconSize, height: bottomIconSize),
+      title: Container(
+          margin: EdgeInsets.only(top: 4.0),
+          child: Text(title,
+              style: TextStyle(fontSize: 10.0, color: Color(0xFF888888)))),
+    );
+  }
 
   @override
   void initState() {
@@ -37,30 +62,22 @@ class _IndexPageState extends State<IndexPage> {
       currentIndex = index;
       currentPage = pageList[currentIndex];
     });
-    getRequest();
-  }
-
-  getRequest() async {
-    try {
-      Response response = await Dio().get("https://www.easy-mock.com/mock/5e1aa40eedb71e73148360dc/sunshine/home");
-      print(response);
-    } catch (e) {
-      print(e);
-    }
+    HttpRequest.get("/home")
+        .then((val) => {print('then$val')})
+        .catchError((error) => {print('catchError=$error')});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-//      bottomNavigationBar: BottomNavigationBar(
-//          type: BottomNavigationBarType.fixed,
-//          currentIndex: currentIndex,
-//          items: bottomTabList,
-//          fixedColor: Colors.lightBlue,
-//          onTap: onTabSelected,
-//      ),
-      body: TestPage(),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: currentIndex,
+        items: bottomTabList,
+        onTap: onTabSelected,
+      ),
+      body: currentPage,
     );
   }
 }
