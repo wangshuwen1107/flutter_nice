@@ -2,8 +2,9 @@ import 'package:base/entity/request_data.dart';
 import 'package:base/request/get_request.dart';
 import 'package:base/request/post_request.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 
-typedef HttpCallback = dynamic Function(RequestData requestData);
+typedef HttpCallback<T> = dynamic Function(RequestData<T> requestData);
 
 class HttpRequest {
   static const String BASE_URL = "https://api.dingstock.net";
@@ -27,10 +28,11 @@ class HttpRequest {
         print("url = ${options.uri.toString()}");
         print("headers = ${options.headers}");
         print("params = ${options.data}");
+        print("method = ${options.method}");
       }, onResponse: (Response response) {
         print("\n================== 响应数据 ==========================");
         print("code = ${response.statusCode}");
-        print("data = ${response.data}");
+        //print("data = ${response.data}");
         print("\n");
       }, onError: (DioError e) {
         print("\n================== 错误响应数据 ======================");
@@ -48,46 +50,54 @@ class HttpRequest {
     return _instance;
   }
 
-  void get(String path, HttpCallback callback,[Map<String, dynamic> paramsMap]) {
-    var future= GetRequest.form(path).enqueue();
+  void get<T>(String path, HttpCallback<T> callback,
+      [Map<String, dynamic> paramsMap]) {
+    var future = GetRequest.form(path).enqueue();
     request(future, callback);
   }
 
-  void post(String path, HttpCallback callback,
+  void post<T>(String path, HttpCallback<T> callback,
       [Map<String, dynamic> paramsMap,
-        Map<String, dynamic> bodyMap,
-        String contentType]){
-   var future= PostRequest.form(path,
-        paramsMap: paramsMap, bodyMap: bodyMap, contentType: contentType)
+      Map<String, dynamic> bodyMap,
+      String contentType]) {
+    var future = PostRequest.form(path,
+            paramsMap: paramsMap, bodyMap: bodyMap, contentType: contentType)
         .enqueue();
-   request(future, callback);
+    request(future, callback);
   }
 
-  void request(Future<Response> future, HttpCallback callback) {
+  void request<T>(Future<Response> future, HttpCallback<T> callback) {
     future.then((Response response) {
-        if (response.statusCode < 200 || null == response.data) {
+      if (response.statusCode < 200 || null == response.data) {
+        callback(RequestData(
+            success: false,
+            errorMsg: '${response.statusMessage}',
+            errorCode: '${response.statusCode}'));
+      } else {
+        var rootResult = response.data['result'];
+        if (null == rootResult) {
           callback(RequestData(
               success: false,
-              errorMsg: '${response.statusMessage}',
-              errorCode: '${response.statusCode}'));
+              errorCode: 'RESULT_EMPTY',
+              errorMsg: 'RESULT_EMPTY'));
         } else {
-          callback(RequestData(success: true, data: response.data['result']));
+          var finallyResult = rootResult['result'];
+          callback(RequestData(success: true, data: finallyResult));
         }
-      }).catchError((error) {
-        if (error is DioError) {
-          callback(RequestData(
-              success: false,
-              errorMsg: error.response.statusMessage,
-              errorCode: '${error.response.statusCode}'));
-        } else {
-          print('ERROR =' + error.toString());
-          callback(RequestData(
-              success: false,
-              errorMsg: error.toString(),
-              errorCode: error.toString()));
-        }
-      });
+      }
+    }).catchError((error) {
+      if (error is DioError) {
+        callback(RequestData(
+            success: false,
+            errorMsg: error.response.statusMessage,
+            errorCode: '${error.response.statusCode}'));
+      } else {
+        print('ERROR =' + error.toString());
+        callback(RequestData(
+            success: false,
+            errorMsg: error.toString(),
+            errorCode: error.toString()));
+      }
+    });
   }
-
-
 }

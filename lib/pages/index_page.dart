@@ -1,14 +1,11 @@
-import 'dart:io';
-import 'dart:math';
-import 'package:base/entity/request_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'home_page.dart';
 import 'monitoring_page.dart';
 import 'circle_page.dart';
 import 'mine_page.dart';
 import 'compare_page.dart';
-import 'package:base/request/http_request.dart';
+import 'package:home/pages/home_page.dart';
+import 'package:base/pages/without_statusbar.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -65,10 +62,6 @@ class _IndexPageState extends State<IndexPage> {
       currentIndex = index;
       currentPage = pageList[currentIndex];
     });
-
-    HttpRequest.instance().post("/functions/home", (RequestData requestData) {
-      print("${requestData.toString()}");
-    });
   }
 
   @override
@@ -81,7 +74,7 @@ class _IndexPageState extends State<IndexPage> {
         items: bottomTabList,
         onTap: onTabSelected,
       ),
-      body: currentPage,
+      body: WithoutStatusBar(child: currentPage),
     );
   }
 }
