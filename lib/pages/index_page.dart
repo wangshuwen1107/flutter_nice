@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:base/entity/request_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,8 +40,8 @@ class _IndexPageState extends State<IndexPage> {
         "我的", "images/tabbar_me_light.png", "images/tabbar_me_dark.png")
   ];
 
-  static _buildBarItem(String title, String lightIconPath,
-      String darkIconPath) {
+  static _buildBarItem(
+      String title, String lightIconPath, String darkIconPath) {
     return BottomNavigationBarItem(
       icon: Image.asset(darkIconPath,
           width: bottomIconSize, height: bottomIconSize),
@@ -65,7 +66,9 @@ class _IndexPageState extends State<IndexPage> {
       currentPage = pageList[currentIndex];
     });
 
-    HttpRequest.instance().post("/functions/home").then((val) => print('GAGA$val')).catchError((e)=>print('EEEEEE$e'));
+    HttpRequest.instance().post("/functions/home", (RequestData requestData) {
+      print("${requestData.toString()}");
+    });
   }
 
   @override

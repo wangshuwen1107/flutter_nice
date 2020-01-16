@@ -12,4 +12,11 @@ class RequestData<T> {
     this.errorCode,
     this.errorMsg,
   });
+
+  @override
+  String toString() {
+    return 'RequestData{errorMsg: $errorMsg, errorCode: $errorCode, data: $data, success: $success}';
+  }
+
+
 }

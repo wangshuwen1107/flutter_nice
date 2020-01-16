@@ -11,8 +11,8 @@ class GetRequest extends BaseRequest {
 
 
   @override
-  Future<Response> enqueue() async {
-    return await HttpRequest.instance().dio.get(path, queryParameters: paramsMap,options: getOption());
+  Future<Response> enqueue()  {
+    return HttpRequest.instance().dio.get(path, queryParameters: paramsMap,options: getOption());
   }
 
   Options getOption() {

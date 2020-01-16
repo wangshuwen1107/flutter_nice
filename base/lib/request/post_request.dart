@@ -3,21 +3,28 @@ import 'package:base/request/http_request.dart';
 import 'package:dio/dio.dart';
 
 class PostRequest extends BaseRequest {
-  Map<String, dynamic> bodyMap;
-  String contentType;
+  //todo 默认配置
+  Map<String, dynamic> bodyMap = {"app": 'android1.4.2', 'version': '1.4.0'};
+
+  String contentType=Headers.jsonContentType;
 
   PostRequest.form(String path,
       {Map<String, dynamic> paramsMap,
       Map<String, dynamic> headerMap,
       this.contentType,
-      this.bodyMap})
-      : super.form(path, paramsMap: paramsMap, headerMap: headerMap);
+      Map<String, dynamic> bodyMap})
+      : super.form(path, paramsMap: paramsMap, headerMap: headerMap) {
+    if (null != bodyMap) {
+      this.bodyMap.addAll(bodyMap);
+    }
+  }
 
-  Future<Response> enqueue() async {
-    return await HttpRequest.instance().dio.post(path,
+  @override
+  Future<Response> enqueue() {
+    return HttpRequest.instance().dio.post(path,
         queryParameters: paramsMap,
         options: getOption(),
-        data: FormData.fromMap(bodyMap));
+        data: bodyMap);
   }
 
   Options getOption() {

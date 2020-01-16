@@ -3,8 +3,11 @@ import 'package:base/request/get_request.dart';
 import 'package:base/request/post_request.dart';
 import 'package:dio/dio.dart';
 
+typedef HttpCallback = dynamic Function(RequestData requestData);
+
 class HttpRequest {
   static const String BASE_URL = "https://api.dingstock.net";
+
   static HttpRequest _instance;
   Dio dio;
 
@@ -45,47 +48,46 @@ class HttpRequest {
     return _instance;
   }
 
-  Future<RequestData> get(String path, [Map<String, dynamic> paramsMap]) async {
-    await GetRequest.form(path).enqueue().then((Response response) {
-      if (response.statusCode < 200 || null == response.data) {
-        return RequestData(
-            success: false,
-            errorMsg: '${response.statusMessage}',
-            errorCode: '${response.statusCode}');
-      } else {
-        return RequestData(success: true, data: response.data['data']);
-      }
-    }).catchError((DioError dioError) {
-      return RequestData(
-          success: false,
-          errorMsg: '${dioError.type.toString()}',
-          errorCode: '${dioError.message}');
-    });
-    return RequestData(success: false, errorCode: 'LOCAL_ERROR');
+  void get(String path, HttpCallback callback,[Map<String, dynamic> paramsMap]) {
+    var future= GetRequest.form(path).enqueue();
+    request(future, callback);
   }
 
-  Future<RequestData> post(String path,
+  void post(String path, HttpCallback callback,
       [Map<String, dynamic> paramsMap,
-      Map<String, dynamic> bodyMap,
-      String contentType]) async {
-    await PostRequest.form(path,
-            paramsMap: paramsMap, bodyMap: bodyMap, contentType: contentType)
-        .enqueue()
-        .then((Response response) {
-      if (response.statusCode < 200 || null == response.data) {
-        return RequestData(
-            success: false,
-            errorMsg: '${response.statusMessage}',
-            errorCode: '${response.statusCode}');
-      } else {
-        return RequestData(success: true, data: response.data['result']);
-      }
-    }).catchError((error) {
-      print('ERROR =' + error.toString());
-      return RequestData(
-          success: false,
-          errorMsg: error.toString(),
-          errorCode: error.toString());
-    });
+        Map<String, dynamic> bodyMap,
+        String contentType]){
+   var future= PostRequest.form(path,
+        paramsMap: paramsMap, bodyMap: bodyMap, contentType: contentType)
+        .enqueue();
+   request(future, callback);
   }
+
+  void request(Future<Response> future, HttpCallback callback) {
+    future.then((Response response) {
+        if (response.statusCode < 200 || null == response.data) {
+          callback(RequestData(
+              success: false,
+              errorMsg: '${response.statusMessage}',
+              errorCode: '${response.statusCode}'));
+        } else {
+          callback(RequestData(success: true, data: response.data['result']));
+        }
+      }).catchError((error) {
+        if (error is DioError) {
+          callback(RequestData(
+              success: false,
+              errorMsg: error.response.statusMessage,
+              errorCode: '${error.response.statusCode}'));
+        } else {
+          print('ERROR =' + error.toString());
+          callback(RequestData(
+              success: false,
+              errorMsg: error.toString(),
+              errorCode: error.toString()));
+        }
+      });
+  }
+
+
 }
