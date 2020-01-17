@@ -20,13 +20,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: getTabSize(),
-      child: Scaffold(
-          body: Column(
-        children: <Widget>[ getTabContainer(),
-          TabBarView(children: getTabContentViewList()),],
-      )),
-    );
+        length: getTabSize(),
+        child: Scaffold(
+          appBar: PreferredSize(
+              child: AppBar(
+                flexibleSpace: SafeArea(
+                  child: getTabContainer(),
+                ),
+                backgroundColor: Color(0xFFF7F7F9),
+                elevation: 0,
+              ),
+              preferredSize: Size.fromHeight(50)),
+          body: TabBarView(children: getTabContentViewList()),
+        ));
   }
 
   List<Widget> getTabContentViewList() {
@@ -78,8 +84,8 @@ class _HomePageState extends State<HomePage> {
         isScrollable: true,
         labelColor: Color(0xFF373E4D),
         unselectedLabelColor: Color(0xFF797F8C),
-        labelStyle: TextStyle(fontSize: 22.0),
-        unselectedLabelStyle: TextStyle(fontSize: 16.0),
+        labelStyle: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold),
+        unselectedLabelStyle: TextStyle(fontSize: 16.0,fontWeight: FontWeight.normal),
       ),
     );
   }

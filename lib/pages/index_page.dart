@@ -74,7 +74,7 @@ class _IndexPageState extends State<IndexPage> {
         items: bottomTabList,
         onTap: onTabSelected,
       ),
-      body: WithoutStatusBar(child: currentPage),
+      body: currentPage,
     );
   }
 }
