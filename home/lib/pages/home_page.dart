@@ -2,6 +2,7 @@ import 'package:base/entity/request_data.dart';
 import 'package:base/request/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:home/entity/home_data.dart';
+import 'home_dingchao_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,19 +20,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if(null==_homeData){
+      return Container();
+    }
     return DefaultTabController(
         length: getTabSize(),
         child: Scaffold(
-          appBar: PreferredSize(
-              child: AppBar(
-                flexibleSpace: SafeArea(
-                  child: getTabContainer(),
-                ),
-                backgroundColor: Color(0xFFF7F7F9),
-                elevation: 0,
-              ),
-              preferredSize: Size.fromHeight(50)),
-          body: TabBarView(children: getTabContentViewList()),
+//          appBar: PreferredSize(
+//              child: AppBar(
+//                flexibleSpace: SafeArea(
+//                  child: getTabContainer(),
+//                ),
+//                backgroundColor: Color(0xFFF7F7F9),
+//                elevation: 0,
+//              ),
+//              preferredSize: Size.fromHeight(50)),
+          body: DingChaoPage(_homeData),
         ));
   }
 
@@ -39,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     List<Widget> viewList = [];
     for (int i = 0; i < getTabSize(); i++) {
       if (i == 0) {
-        viewList.add(Icon(Icons.directions_car));
+        viewList.add(DingChaoPage(_homeData));
       } else {
         viewList.add(Icon(Icons.directions_bike));
       }
@@ -84,8 +88,9 @@ class _HomePageState extends State<HomePage> {
         isScrollable: true,
         labelColor: Color(0xFF373E4D),
         unselectedLabelColor: Color(0xFF797F8C),
-        labelStyle: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold),
-        unselectedLabelStyle: TextStyle(fontSize: 16.0,fontWeight: FontWeight.normal),
+        labelStyle: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+        unselectedLabelStyle:
+            TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
       ),
     );
   }
