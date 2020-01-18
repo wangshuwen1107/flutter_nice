@@ -1,4 +1,5 @@
 library flutter_tindercard;
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -16,11 +17,6 @@ class TinderSwapCard extends StatefulWidget {
   CardDragUpdateCallback swipeUpdateCallback;
   CardController cardController;
 
-//  double _maxWidth;
-//  double _minWidth;
-//  double _maxHeight;
-//  double _minHeight;
-
   @override
   _TinderSwapCardState createState() => _TinderSwapCardState();
 
@@ -32,60 +28,43 @@ class TinderSwapCard extends StatefulWidget {
   TinderSwapCard(
       {@required CardBuilder cardBuilder,
       @required int totalNum,
-      AmassOrientation orientation = AmassOrientation.BOTTOM,
-      int stackNum = 3,
       int animDuration = 800,
       double swipeEdge = 3.0,
       double maxWidth,
       double maxHeight,
-      double minWidth,
-      double minHeight,
       bool allowVerticalMovement = true,
       this.cardController,
       this.swipeCompleteCallback,
       this.swipeUpdateCallback})
       : this._cardBuilder = cardBuilder,
         this._totalNum = totalNum,
-        assert(stackNum > 1),
-        this._stackNum = stackNum,
+        this._stackNum = 3,
         this._animDuration = animDuration,
         assert(swipeEdge > 0),
         this._swipeEdge = swipeEdge,
-        assert(maxWidth > minWidth && maxHeight > minHeight),
-        this._allowVerticalMovement = allowVerticalMovement
-//        this._maxWidth = maxWidth,
-//        this._minWidth = minWidth,
-//        this._maxHeight = maxHeight,
-//        this._minHeight = minHeight
-  {
-    double widthGap = maxWidth - minWidth;
-    double heightGap = maxHeight - minHeight;
-
+        this._allowVerticalMovement = allowVerticalMovement {
     _cardAligns = new List();
     _cardSizes = new List();
-
     for (int i = 0; i < _stackNum; i++) {
-      _cardSizes.add(new Size(minWidth + (widthGap / _stackNum) * i,
-          minHeight + (heightGap / _stackNum) * i));
-
-      switch (orientation) {
-        case AmassOrientation.BOTTOM:
-          _cardAligns.add(
-              new Alignment(0.0, (0.5 / (_stackNum - 1)) * (stackNum - i)));
+      Size size;
+      Alignment alignment;
+      switch (i) {
+        case 0:
+          alignment = Alignment(0, 1);
+          size = Size(maxWidth - 16, maxHeight - 41);
           break;
-        case AmassOrientation.TOP:
-          _cardAligns.add(
-              new Alignment(0.0, (-0.5 / (_stackNum - 1)) * (stackNum - i)));
+        case 1:
+          alignment = Alignment(0, 0.75);
+          size = Size(maxWidth - 8, maxHeight - 30);
           break;
-        case AmassOrientation.LEFT:
-          _cardAligns.add(
-              new Alignment((-0.5 / (_stackNum - 1)) * (stackNum - i), 0.0));
-          break;
-        case AmassOrientation.RIGHT:
-          _cardAligns.add(
-              new Alignment((0.5 / (_stackNum - 1)) * (stackNum - i), 0.0));
+        case 2:
+          size = Size(maxWidth, maxHeight);
+          alignment = Alignment(0, -1);
           break;
       }
+      _cardSizes.add(size);
+      print('index=$i  size=$size y=${alignment.y}');
+      _cardAligns.add(alignment);
     }
   }
 }
@@ -265,8 +244,6 @@ typedef CardSwipeCompleteCallback = void Function(
 /// [DragUpdateDetails] of swiping card.
 typedef CardDragUpdateCallback = void Function(
     DragUpdateDetails details, Alignment align);
-
-enum AmassOrientation { TOP, BOTTOM, LEFT, RIGHT }
 
 class CardAnimation {
   static Animation<Alignment> frontCardAlign(AnimationController controller,

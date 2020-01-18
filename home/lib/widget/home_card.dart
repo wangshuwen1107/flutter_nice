@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home/entity/home_data.dart';
-import 'card/TinderSwapCard.dart';
 import 'package:base/util/util.dart';
+import 'package:home/widget/card/TinderSwapCard.dart';
 
 class HomeCard extends StatefulWidget {
   final HomeItem homeItem;
@@ -33,8 +33,12 @@ class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
               children: <Widget>[pageWidget(), plainWidget()],
             ),
           ),
+          Container(
+            width: 5,
+          ),
           Expanded(
             child: magicCard(),
+//           child: testAlgin(),
           ),
         ],
       ),
@@ -82,26 +86,62 @@ class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
       child: Image.network(homeItem.cardItems[0]?.imageUrl),
       margin: EdgeInsets.only(left: 5));
 
-  CardController controller;
-
   Widget magicCard() {
     if (isEmpty(homeItem.cardItems)) {
       return null;
     }
+    var width = (MediaQuery.of(context).size.width - 29) / 2;
     return new TinderSwapCard(
         totalNum: homeItem.cardItems.length,
-        stackNum: 3,
-        maxWidth: (MediaQuery.of(context).size.width - 30) / 2,
+        maxWidth: width,
         maxHeight: 193,
-        minWidth: (MediaQuery.of(context).size.width - 30) / 2 - 20,
-        minHeight: 152,
-        cardBuilder: (context, index) => Card(
-              child: Image.network(homeItem.cardItems[index].imageUrl,fit:BoxFit.cover),
-            ),
-        cardController: controller = CardController(),
+        cardBuilder: (context, index) {
+          return Image.network(homeItem.cardItems[index].imageUrl,
+              fit: BoxFit.cover);
+        },
+        cardController: CardController(),
         swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
           print("orientation=${orientation.toString()}  index=$index");
-
         });
+  }
+
+  Widget testAlgin() {
+    var width = (MediaQuery.of(context).size.width - 29) / 2;
+    return Container(
+      color: Colors.black,
+      width: (MediaQuery.of(context).size.width - 29) / 2,
+      height: 205,
+      child: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment(0, 1),
+            child: SizedBox.fromSize(
+              size: Size(width - 12, 152),
+              child: Container(
+                color: Colors.red,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment(0, 0.75),
+            child: SizedBox.fromSize(
+              size: Size(width - 6, 163),
+              child: Container(
+                color: Colors.blueAccent,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment(0, -1),
+            child: SizedBox.fromSize(
+              size: Size((MediaQuery.of(context).size.width - 29) / 2, 193),
+              child: Container(
+                color: Colors.amber,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

@@ -43,7 +43,9 @@ class _DingChaoPageState extends State<DingChaoPage> {
                   return HomeCard(homeItem: itemList[index]['data']);
               }
               return null;
-            }));
+            },
+            )
+    );
   }
 
   int getItemCount() {
