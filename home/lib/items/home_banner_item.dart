@@ -1,7 +1,7 @@
+import 'package:base/entity/home/home_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:base/util/util.dart';
-import 'package:home/entity/home_data.dart';
-import 'package:home/widget/banner.dart';
+import 'package:home/widget/banner_widget.dart';
 
 class HomeBannerItem extends StatefulWidget {
   final List<HomeBanner> bannerItems;

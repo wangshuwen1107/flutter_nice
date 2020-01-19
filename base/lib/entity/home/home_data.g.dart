@@ -19,12 +19,11 @@ HomeData _$HomeDataFromJson(Map<String, dynamic> json) {
     fab: json['fab'] == null
         ? null
         : HomeFabBean.fromJson(json['fab'] as Map<String, dynamic>),
-    posts: (json['posts'] as List)
-        ?.map((e) => e == null
-            ? null
-            : CircleDynamicBean.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-  );
+  )..posts = (json['posts'] as List)
+      ?.map((e) => e == null
+          ? null
+          : CircleDynamicBean.fromJson(e as Map<String, dynamic>))
+      ?.toList();
 }
 
 Map<String, dynamic> _$HomeDataToJson(HomeData instance) => <String, dynamic>{
@@ -79,23 +78,6 @@ Map<String, dynamic> _$HomeCategoryBeanToJson(HomeCategoryBean instance) =>
       'type': instance.type,
       'objectId': instance.objectId,
       'link': instance.link,
-    };
-
-CircleDynamicBean _$CircleDynamicBeanFromJson(Map<String, dynamic> json) {
-  return CircleDynamicBean(
-    imageUrl: json['imageUrl'] as String,
-    link: json['link'] as String,
-    width: json['width'] as int,
-    height: json['height'] as int,
-  );
-}
-
-Map<String, dynamic> _$CircleDynamicBeanToJson(CircleDynamicBean instance) =>
-    <String, dynamic>{
-      'imageUrl': instance.imageUrl,
-      'link': instance.link,
-      'width': instance.width,
-      'height': instance.height,
     };
 
 HomeFabBean _$HomeFabBeanFromJson(Map<String, dynamic> json) {

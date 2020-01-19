@@ -1,7 +1,7 @@
+import 'package:base/entity/home/home_data.dart';
 import 'package:base/entity/request_data.dart';
 import 'package:base/request/http_request.dart';
 import 'package:flutter/material.dart';
-import 'package:home/entity/home_data.dart';
 import 'home_dingchao_page.dart';
 
 class HomePage extends StatefulWidget {

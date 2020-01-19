@@ -1,5 +1,5 @@
-name: home
-description: home_module
+name: circle
+description: circle module
 version: 0.0.1
 author:
 homepage:
@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   base:
     path: ../base/
-
+  json_annotation: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +21,4 @@ dev_dependencies:
   json_serializable: ^3.2.0
 
 flutter:
+

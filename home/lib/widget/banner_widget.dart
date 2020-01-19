@@ -135,7 +135,7 @@ class BannerState extends State<BannerWidget> {
     List<Widget> circle = [];
     for (var i = 0; i < widget.datas.length; i++) {
       circle.add(Container(
-        margin: EdgeInsets.all(6.0),
+        margin: EdgeInsets.fromLTRB(3, 0, 3, 6),
         width: widget.pointRadius * 2,
         height: widget.pointRadius * 2,
         decoration: new BoxDecoration(

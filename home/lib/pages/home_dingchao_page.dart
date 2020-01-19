@@ -1,8 +1,8 @@
+import 'package:base/entity/home/home_data.dart';
 import 'package:flutter/material.dart';
-import 'package:home/entity/home_data.dart';
 import 'package:base/util/util.dart';
-import 'package:home/widget/home_banner_item.dart';
-import 'package:home/widget/home_head.dart';
+import 'package:home/items/home_banner_item.dart';
+import 'package:home/items/home_head.dart';
 
 class DingChaoPage extends StatefulWidget {
   final HomeData homeData;
@@ -32,18 +32,19 @@ class _DingChaoPageState extends State<DingChaoPage> {
   Widget build(BuildContext context) {
     homeData = widget.homeData;
     return Container(
+        color: Color(0xF7F7F9FF),
         child: ListView.builder(
-      itemCount: getItemCount(),
-      itemBuilder: (BuildContext context, int index) {
-        switch (itemList[index]['viewType']) {
-          case BANNER_TYPE:
-            return HomeBannerItem(itemList[index]['data']);
-          case PAGE_TYPE:
-            return HomeCard(homeItem: itemList[index]['data']);
-        }
-        return null;
-      },
-    ));
+          itemCount: getItemCount(),
+          itemBuilder: (BuildContext context, int index) {
+            switch (itemList[index]['viewType']) {
+              case BANNER_TYPE:
+                return HomeBannerItem(itemList[index]['data']);
+              case PAGE_TYPE:
+                return HomeCard(homeItem: itemList[index]['data']);
+            }
+            return null;
+          },
+        ));
   }
 
   int getItemCount() {
@@ -62,9 +63,6 @@ class _DingChaoPageState extends State<DingChaoPage> {
         itemList.add({'viewType': BANNER_TYPE, 'data': homeItem.bannerItems});
       }
     }
-//    if (!isEmpty(homeData.posts)) {
-//      count += homeData.posts.length;
-//    }
     return itemList.length;
   }
 }

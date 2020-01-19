@@ -1,3 +1,4 @@
+import 'package:base/entity/circle/circle_dynamic_bean.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'home_data.g.dart';
 
@@ -58,19 +59,7 @@ class HomeCategoryBean {
   Map<String, dynamic> toJson() => _$HomeCategoryBeanToJson(this);
 }
 
-@JsonSerializable()
-class CircleDynamicBean {
-  String imageUrl;
-  String link;
-  int width;
-  int height;
 
-  CircleDynamicBean({this.imageUrl, this.link, this.width, this.height});
-
-  factory CircleDynamicBean.fromJson(Map<String, dynamic> json) => _$CircleDynamicBeanFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CircleDynamicBeanToJson(this);
-}
 
 @JsonSerializable()
 class HomeFabBean {
