@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:home/entity/home_data.dart';
-import 'dart:convert';
 import 'package:base/util/util.dart';
-import 'package:home/widget/home_card.dart';
+import 'package:home/widget/home_banner_item.dart';
+import 'package:home/widget/home_head.dart';
 
 class DingChaoPage extends StatefulWidget {
   final HomeData homeData;
@@ -37,7 +37,7 @@ class _DingChaoPageState extends State<DingChaoPage> {
       itemBuilder: (BuildContext context, int index) {
         switch (itemList[index]['viewType']) {
           case BANNER_TYPE:
-            return null;
+            return HomeBannerItem(itemList[index]['data']);
           case PAGE_TYPE:
             return HomeCard(homeItem: itemList[index]['data']);
         }
@@ -58,9 +58,9 @@ class _DingChaoPageState extends State<DingChaoPage> {
           !isEmpty(homeItem.cardItems)) {
         itemList.add({'viewType': PAGE_TYPE, 'data': homeItem});
       }
-//      if (!isEmpty(homeItem.bannerItems)) {
-//        itemList.add({'viewType': BANNER_TYPE, 'data': homeItem.bannerItems});
-//      }
+      if (!isEmpty(homeItem.bannerItems)) {
+        itemList.add({'viewType': BANNER_TYPE, 'data': homeItem.bannerItems});
+      }
     }
 //    if (!isEmpty(homeData.posts)) {
 //      count += homeData.posts.length;

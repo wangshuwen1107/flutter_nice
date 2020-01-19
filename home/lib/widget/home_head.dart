@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home/entity/home_data.dart';
 import 'package:base/util/util.dart';
-import 'card_banner.dart';
-import 'package:transparent_image/transparent_image.dart';
+import 'banner.dart';
 
 class HomeCard extends StatefulWidget {
   final HomeItem homeItem;
