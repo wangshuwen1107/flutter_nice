@@ -13,4 +13,6 @@ class IconFont extends Icon {
             size: size,
             semanticLabel: semanticLabel,
             textDirection: textDirection);
+
+
 }

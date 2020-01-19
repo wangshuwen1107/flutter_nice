@@ -18,7 +18,7 @@ CircleDynamicBean _$CircleDynamicBeanFromJson(Map<String, dynamic> json) {
     user: json['user'] == null
         ? null
         : CircleUserBean.fromJson(json['user'] as Map<String, dynamic>),
-    createdAt: (json['createdAt'] as num)?.toDouble(),
+    createdAt: (json['createdAt'] as num)?.toInt(),
     objectId: json['objectId'] as String,
     images: (json['images'] as List)
         ?.map((e) => e == null

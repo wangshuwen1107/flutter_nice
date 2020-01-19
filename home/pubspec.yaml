@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   base:
     path: ../base/
+  circle:
+    path: ../circle/
 
 
 dev_dependencies:

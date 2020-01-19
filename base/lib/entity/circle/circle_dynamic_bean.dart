@@ -10,7 +10,7 @@ class CircleDynamicBean {
   String content;
   int commentCount;
   CircleUserBean user;
-  double createdAt;
+  int createdAt;
   String objectId;
   List<CircleImageBean> images;
   CircleLinkBean webpageLink;

@@ -1,8 +1,10 @@
+import 'package:base/entity/circle/circle_dynamic_bean.dart';
 import 'package:base/entity/home/home_data.dart';
 import 'package:flutter/material.dart';
 import 'package:base/util/util.dart';
 import 'package:home/items/home_banner_item.dart';
 import 'package:home/items/home_head.dart';
+import 'package:circle/items/circle_dynamic_item.dart';
 
 class DingChaoPage extends StatefulWidget {
   final HomeData homeData;
@@ -41,6 +43,8 @@ class _DingChaoPageState extends State<DingChaoPage> {
                 return HomeBannerItem(itemList[index]['data']);
               case PAGE_TYPE:
                 return HomeCard(homeItem: itemList[index]['data']);
+              case POST_TYPE:
+                return CircleDynamicItem(itemList[index]['data']);
             }
             return null;
           },
@@ -61,6 +65,11 @@ class _DingChaoPageState extends State<DingChaoPage> {
       }
       if (!isEmpty(homeItem.bannerItems)) {
         itemList.add({'viewType': BANNER_TYPE, 'data': homeItem.bannerItems});
+      }
+      if (!isEmpty(homeData.posts)) {
+        for (CircleDynamicBean circleDynamicBean in homeData.posts) {
+          itemList.add({'viewType': POST_TYPE, 'data': circleDynamicBean});
+        }
       }
     }
     return itemList.length;

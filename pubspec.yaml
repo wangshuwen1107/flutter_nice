@@ -11,6 +11,8 @@ dependencies:
     path: base/
   home:
     path: home/
+  circle:
+    path: circle/
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
