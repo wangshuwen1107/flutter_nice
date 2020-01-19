@@ -26,15 +26,15 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
         length: getTabSize(),
         child: Scaffold(
-//          appBar: PreferredSize(
-//              child: AppBar(
-//                flexibleSpace: SafeArea(
-//                  child: getTabContainer(),
-//                ),
-//                backgroundColor: Color(0xFFF7F7F9),
-//                elevation: 0,
-//              ),
-//              preferredSize: Size.fromHeight(50)),
+          appBar: PreferredSize(
+              child: AppBar(
+                flexibleSpace: SafeArea(
+                  child: getTabContainer(),
+                ),
+                backgroundColor: Color(0xFFF7F7F9),
+                elevation: 0,
+              ),
+              preferredSize: Size.fromHeight(50)),
           body: DingChaoPage(_homeData),
         ));
   }

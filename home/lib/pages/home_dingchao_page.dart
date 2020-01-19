@@ -31,21 +31,19 @@ class _DingChaoPageState extends State<DingChaoPage> {
   @override
   Widget build(BuildContext context) {
     homeData = widget.homeData;
-    print("build---${jsonEncode(homeData ?? "")}");
     return Container(
         child: ListView.builder(
-            itemCount: getItemCount(),
-            itemBuilder: (BuildContext context, int index) {
-              switch (itemList[index]['viewType']) {
-                case BANNER_TYPE:
-                  return null;
-                case PAGE_TYPE:
-                  return HomeCard(homeItem: itemList[index]['data']);
-              }
-              return null;
-            },
-            )
-    );
+      itemCount: getItemCount(),
+      itemBuilder: (BuildContext context, int index) {
+        switch (itemList[index]['viewType']) {
+          case BANNER_TYPE:
+            return null;
+          case PAGE_TYPE:
+            return HomeCard(homeItem: itemList[index]['data']);
+        }
+        return null;
+      },
+    ));
   }
 
   int getItemCount() {

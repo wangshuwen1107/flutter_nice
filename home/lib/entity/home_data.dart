@@ -20,8 +20,8 @@ class HomeData {
 class HomeBadgeBean {
   String title;
   String bgImageUrl;
-  String startColor = "#C47BFF";
-  String endColor = "#FF8FF1";
+  String startColor  ;
+  String endColor ;
 
   HomeBadgeBean({this.title, this.bgImageUrl, this.startColor, this.endColor});
 
