@@ -36,6 +36,7 @@ class _DingChaoPageState extends State<DingChaoPage> {
     return Container(
         color: Color(0xF7F7F9FF),
         child: ListView.builder(
+          shrinkWrap: true,//增加
           itemCount: getItemCount(),
           itemBuilder: (BuildContext context, int index) {
             switch (itemList[index]['viewType']) {

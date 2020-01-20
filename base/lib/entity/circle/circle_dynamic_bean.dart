@@ -32,6 +32,7 @@ class CircleDynamicBean {
 
 @JsonSerializable()
 class CircleImageBean {
+  int height;
   int width;
   String thumbnail;
   String format;

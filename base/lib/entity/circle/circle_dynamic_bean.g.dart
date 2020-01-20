@@ -18,7 +18,7 @@ CircleDynamicBean _$CircleDynamicBeanFromJson(Map<String, dynamic> json) {
     user: json['user'] == null
         ? null
         : CircleUserBean.fromJson(json['user'] as Map<String, dynamic>),
-    createdAt: (json['createdAt'] as num)?.toInt(),
+    createdAt: json['createdAt'] as int,
     objectId: json['objectId'] as String,
     images: (json['images'] as List)
         ?.map((e) => e == null
@@ -67,11 +67,12 @@ CircleImageBean _$CircleImageBeanFromJson(Map<String, dynamic> json) {
     thumbnail: json['thumbnail'] as String,
     format: json['format'] as String,
     url: json['url'] as String,
-  );
+  )..height = json['height'] as int;
 }
 
 Map<String, dynamic> _$CircleImageBeanToJson(CircleImageBean instance) =>
     <String, dynamic>{
+      'height': instance.height,
       'width': instance.width,
       'thumbnail': instance.thumbnail,
       'format': instance.format,

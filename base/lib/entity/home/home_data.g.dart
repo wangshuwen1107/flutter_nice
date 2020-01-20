@@ -19,11 +19,12 @@ HomeData _$HomeDataFromJson(Map<String, dynamic> json) {
     fab: json['fab'] == null
         ? null
         : HomeFabBean.fromJson(json['fab'] as Map<String, dynamic>),
-  )..posts = (json['posts'] as List)
-      ?.map((e) => e == null
-          ? null
-          : CircleDynamicBean.fromJson(e as Map<String, dynamic>))
-      ?.toList();
+    posts: (json['posts'] as List)
+        ?.map((e) => e == null
+            ? null
+            : CircleDynamicBean.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
 }
 
 Map<String, dynamic> _$HomeDataToJson(HomeData instance) => <String, dynamic>{

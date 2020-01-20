@@ -23,16 +23,22 @@ flutter:
   uses-material-design: true
 
   assets:
-    - images/tabbar_home_dark.png
-    - images/tabbar_home_light.png
-    - images/tabbar_monitoring_dark.png
-    - images/tabbar_monitoring_light.png
-    - images/tabbar_compare_light.png
-    - images/tabbar_compare_dark.png
-    - images/tabbar_circle_light.png
-    - images/tabbar_circle_dark.png
-    - images/tabbar_me_light.png
-    - images/tabbar_me_dark.png
+    - assets/images/tabbar_home_dark.png
+    - assets/images/tabbar_home_light.png
+    - assets/images/tabbar_monitoring_dark.png
+    - assets/images/tabbar_monitoring_light.png
+    - assets/images/tabbar_compare_light.png
+    - assets/images/tabbar_compare_dark.png
+    - assets/images/tabbar_circle_light.png
+    - assets/images/tabbar_circle_dark.png
+    - assets/images/tabbar_me_light.png
+    - assets/images/tabbar_me_dark.png
+
+  fonts:
+    - family: iconfont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
+
 
   module:
     androidX: true

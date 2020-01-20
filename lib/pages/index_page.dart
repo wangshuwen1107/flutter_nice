@@ -26,15 +26,15 @@ class _IndexPageState extends State<IndexPage> {
 
   List<BottomNavigationBarItem> bottomTabList = [
     _buildBarItem(
-        "首页", "images/tabbar_home_light.png", "images/tabbar_home_dark.png"),
-    _buildBarItem("监控", "images/tabbar_monitoring_light.png",
-        "images/tabbar_monitoring_dark.png"),
-    _buildBarItem("比价", "images/tabbar_compare_light.png",
-        "images/tabbar_compare_dark.png"),
-    _buildBarItem("圈子", "images/tabbar_circle_light.png",
-        "images/tabbar_circle_dark.png"),
+        "首页", "assets/images/tabbar_home_light.png", "assets/images/tabbar_home_dark.png"),
+    _buildBarItem("监控", "assets/images/tabbar_monitoring_light.png",
+        "assets/images/tabbar_monitoring_dark.png"),
+    _buildBarItem("比价", "assets/images/tabbar_compare_light.png",
+        "assets/images/tabbar_compare_dark.png"),
+    _buildBarItem("圈子", "assets/images/tabbar_circle_light.png",
+        "assets/images/tabbar_circle_dark.png"),
     _buildBarItem(
-        "我的", "images/tabbar_me_light.png", "images/tabbar_me_dark.png")
+        "我的", "assets/images/tabbar_me_light.png", "assets/images/tabbar_me_dark.png")
   ];
 
   static _buildBarItem(

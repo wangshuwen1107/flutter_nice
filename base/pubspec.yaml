@@ -23,8 +23,5 @@ dev_dependencies:
 
 flutter:
 
-fonts:
-  - family: iconfont
-    fonts:
-      - asset: fonts/iconfont.ttf
+
 
