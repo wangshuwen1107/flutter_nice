@@ -151,6 +151,6 @@ class BannerState extends State<BannerWidget> {
 
   onPageChanged(index) {
     selectedIndex = index % widget.datas.length;
-    //setState(() {});
+    setState(() {});
   }
 }
