@@ -5,7 +5,6 @@ import 'circle_page.dart';
 import 'mine_page.dart';
 import 'compare_page.dart';
 import 'package:home/pages/home_page.dart';
-import 'package:base/pages/without_statusbar.dart';
 
 class IndexPage extends StatefulWidget {
   @override
