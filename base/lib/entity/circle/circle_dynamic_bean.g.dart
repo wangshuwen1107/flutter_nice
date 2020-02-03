@@ -144,8 +144,8 @@ Map<String, dynamic> _$CircleLinkBeanToJson(CircleLinkBean instance) =>
 CircleVideoBean _$CircleVideoBeanFromJson(Map<String, dynamic> json) {
   return CircleVideoBean(
     url: json['url'] as String,
-    width: (json['width'] as num)?.toDouble(),
-    height: (json['height'] as num)?.toDouble(),
+    width: json['width'] as int,
+    height: json['height'] as int,
   );
 }
 

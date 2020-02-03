@@ -101,8 +101,8 @@ class CircleLinkBean {
 @JsonSerializable()
 class CircleVideoBean {
   String url;
-  double width;
-  double height;
+  int width;
+  int height;
 
   CircleVideoBean({this.url, this.width, this.height});
 

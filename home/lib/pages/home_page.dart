@@ -1,8 +1,7 @@
 import 'package:base/entity/home/home_data.dart';
-import 'package:base/entity/request_data.dart';
-import 'package:base/request/http_request.dart';
 import 'package:flutter/material.dart';
 import 'home_dingchao_page.dart';
+import 'package:base/api/home_api.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -96,9 +95,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getHomeData() {
-    HttpRequest.instance().post("/functions/home").then((response) {
+    HomeApi.instance().getHomeData().then((data) {
       setState(() {
-        _homeData = HomeData.fromJson(response.data);
+        _homeData = data;
       });
     });
   }

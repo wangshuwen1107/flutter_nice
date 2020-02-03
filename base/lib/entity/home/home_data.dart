@@ -1,5 +1,6 @@
 import 'package:base/entity/circle/circle_dynamic_bean.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'home_data.g.dart';
 
 @JsonSerializable()
@@ -7,29 +8,43 @@ class HomeData {
   List<HomeCategoryBean> categories;
   HomeItem items;
   HomeFabBean fab;
-  List<CircleDynamicBean> posts;
+  HomePostData posts;
 
   HomeData({this.categories, this.items, this.fab, this.posts});
 
-  factory HomeData.fromJson(Map<String, dynamic> json) => _$HomeDataFromJson(json);
+  factory HomeData.fromJson(Map<String, dynamic> json) =>
+      _$HomeDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeDataToJson(this);
+}
 
+@JsonSerializable()
+class HomePostData {
+  List<CircleDynamicBean> posts;
+  int nextKey;
+
+  HomePostData({this.posts, this.nextKey});
+
+  factory HomePostData.fromJson(Map<String, dynamic> json) =>
+      _$HomePostDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HomePostDataToJson(this);
 }
 
 @JsonSerializable()
 class HomeBadgeBean {
   String title;
   String bgImageUrl;
-  String startColor  ;
-  String endColor ;
+  String startColor;
+
+  String endColor;
 
   HomeBadgeBean({this.title, this.bgImageUrl, this.startColor, this.endColor});
 
-  factory HomeBadgeBean.fromJson(Map<String, dynamic> json) => _$HomeBadgeBeanFromJson(json);
+  factory HomeBadgeBean.fromJson(Map<String, dynamic> json) =>
+      _$HomeBadgeBeanFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeBadgeBeanToJson(this);
-
 }
 
 @JsonSerializable()
@@ -39,10 +54,10 @@ class HomeBanner {
 
   HomeBanner({this.imageUrl, this.targetUrl});
 
-  factory HomeBanner.fromJson(Map<String, dynamic> json) => _$HomeBannerFromJson(json);
+  factory HomeBanner.fromJson(Map<String, dynamic> json) =>
+      _$HomeBannerFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeBannerToJson(this);
-
 }
 
 @JsonSerializable()
@@ -54,12 +69,11 @@ class HomeCategoryBean {
 
   HomeCategoryBean({this.name, this.type, this.objectId, this.link});
 
-  factory HomeCategoryBean.fromJson(Map<String, dynamic> json) => _$HomeCategoryBeanFromJson(json);
+  factory HomeCategoryBean.fromJson(Map<String, dynamic> json) =>
+      _$HomeCategoryBeanFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeCategoryBeanToJson(this);
 }
-
-
 
 @JsonSerializable()
 class HomeFabBean {
@@ -67,9 +81,11 @@ class HomeFabBean {
   String link;
   int width;
   int height;
+
   HomeFabBean({this.imageUrl, this.link, this.width, this.height});
 
-  factory HomeFabBean.fromJson(Map<String, dynamic> json) => _$HomeFabBeanFromJson(json);
+  factory HomeFabBean.fromJson(Map<String, dynamic> json) =>
+      _$HomeFabBeanFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeFabBeanToJson(this);
 }
@@ -83,12 +99,11 @@ class HomeHeadCommonBean {
 
   HomeHeadCommonBean({this.link, this.title, this.imageUrl, this.badge});
 
-  factory HomeHeadCommonBean.fromJson(Map<String, dynamic> json) => _$HomeHeadCommonBeanFromJson(json);
+  factory HomeHeadCommonBean.fromJson(Map<String, dynamic> json) =>
+      _$HomeHeadCommonBeanFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeHeadCommonBeanToJson(this);
-
 }
-
 
 @JsonSerializable()
 class HomeItem {
@@ -97,10 +112,11 @@ class HomeItem {
   List<HomeHeadCommonBean> plainItems;
   List<HomeHeadCommonBean> cardItems;
 
-  HomeItem({this.bannerItems, this.pagerItems, this.plainItems, this.cardItems});
+  HomeItem(
+      {this.bannerItems, this.pagerItems, this.plainItems, this.cardItems});
 
-  factory HomeItem.fromJson(Map<String, dynamic> json) => _$HomeItemFromJson(json);
+  factory HomeItem.fromJson(Map<String, dynamic> json) =>
+      _$HomeItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeItemToJson(this);
-
 }

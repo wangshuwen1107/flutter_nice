@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 class PostRequest extends BaseRequest {
   //todo 默认配置
-  Map<String, dynamic> bodyMap = {"app": 'android1.4.2', 'version': '1.4.0'};
+  Map<String, dynamic> bodyMap = {"app": 'android1.4.2', 'version': '1.4.3'};
 
   String contentType=Headers.jsonContentType;
 

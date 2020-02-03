@@ -1,12 +1,12 @@
 import 'package:base/entity/circle/circle_dynamic_bean.dart';
 import 'package:base/entity/home/home_data.dart';
-import 'package:base/entity/request_data.dart';
-import 'package:base/request/http_request.dart';
+import 'package:base/api/home_api.dart';
 import 'package:flutter/material.dart';
 import 'package:base/util/util.dart';
 import 'package:home/items/home_banner_item.dart';
 import 'package:home/items/home_head.dart';
 import 'package:circle/items/circle_dynamic_item.dart';
+import 'package:base/widgets/x_listview.dart';
 
 class DingChaoPage extends StatefulWidget {
   final HomeData homeData;
@@ -26,8 +26,6 @@ class _DingChaoPageState extends State<DingChaoPage> {
   static const int PAGE_TYPE = 1;
   static const int POST_TYPE = 2;
 
-  ScrollController _mController = ScrollController();
-
   @override
   void initState() {
     super.initState();
@@ -37,15 +35,11 @@ class _DingChaoPageState extends State<DingChaoPage> {
   @override
   Widget build(BuildContext context) {
     homeData = widget.homeData;
-//    _mController.addListener(() {
-//      print('---');
-//    });
     return Container(
       color: Color(0xF7F7F9FF),
       child: RefreshIndicator(
         onRefresh: getHomeData,
-        child: ListView.builder(
-          //shrinkWrap: true,
+        child: XListView(
           itemCount: getItemCount(),
           itemBuilder: (BuildContext context, int index) {
             switch (itemList[index]['viewType']) {
@@ -58,18 +52,33 @@ class _DingChaoPageState extends State<DingChaoPage> {
             }
             return null;
           },
-          controller: _mController,
+          onLoadMore: loadMoreData,
+          onError: loadMoreData,
         ),
       ),
     );
   }
 
   Future getHomeData() {
-    return HttpRequest.instance().post("/functions/home").then((response) {
-      setState(() {
-        homeData = HomeData.fromJson(response.data);
-      });
-    });
+    return HomeApi.instance()
+        .getHomeData()
+        .then((HomeData data) => setState(() {
+              homeData = data;
+            }));
+  }
+
+  Future loadMoreData() {
+    print('DingChao Home Load More  --------');
+    return HomeApi.instance()
+        .recommendPosts(homeData.posts?.nextKey)
+        .then((HomePostData data) => setState(() {
+              if (isEmpty(data.posts)) {
+                /// 加载到最后了~~ 待处理
+                return;
+              }
+              homeData.posts.posts.addAll(data.posts);
+              homeData.posts.nextKey = data.nextKey;
+            }));
   }
 
   int getItemCount() {
@@ -87,12 +96,13 @@ class _DingChaoPageState extends State<DingChaoPage> {
       if (!isEmpty(homeItem.bannerItems)) {
         itemList.add({'viewType': BANNER_TYPE, 'data': homeItem.bannerItems});
       }
-      if (!isEmpty(homeData.posts)) {
-        for (CircleDynamicBean circleDynamicBean in homeData.posts) {
+      if (!isEmpty(homeData.posts) && !isEmpty(homeData.posts.posts)) {
+        for (CircleDynamicBean circleDynamicBean in homeData.posts.posts) {
           itemList.add({'viewType': POST_TYPE, 'data': circleDynamicBean});
         }
       }
     }
+    print('itemCount = ${itemList.length}');
     return itemList.length;
   }
 }

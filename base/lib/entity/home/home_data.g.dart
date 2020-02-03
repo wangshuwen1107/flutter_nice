@@ -19,11 +19,9 @@ HomeData _$HomeDataFromJson(Map<String, dynamic> json) {
     fab: json['fab'] == null
         ? null
         : HomeFabBean.fromJson(json['fab'] as Map<String, dynamic>),
-    posts: (json['posts'] as List)
-        ?.map((e) => e == null
-            ? null
-            : CircleDynamicBean.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    posts: json['posts'] == null
+        ? null
+        : HomePostData.fromJson(json['posts'] as Map<String, dynamic>),
   );
 }
 
@@ -32,6 +30,23 @@ Map<String, dynamic> _$HomeDataToJson(HomeData instance) => <String, dynamic>{
       'items': instance.items,
       'fab': instance.fab,
       'posts': instance.posts,
+    };
+
+HomePostData _$HomePostDataFromJson(Map<String, dynamic> json) {
+  return HomePostData(
+    posts: (json['posts'] as List)
+        ?.map((e) => e == null
+            ? null
+            : CircleDynamicBean.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    nextKey: json['nextKey'] as int,
+  );
+}
+
+Map<String, dynamic> _$HomePostDataToJson(HomePostData instance) =>
+    <String, dynamic>{
+      'posts': instance.posts,
+      'nextKey': instance.nextKey,
     };
 
 HomeBadgeBean _$HomeBadgeBeanFromJson(Map<String, dynamic> json) {
