@@ -1,6 +1,8 @@
 import 'package:base/entity/home/home_data.dart';
 import 'package:flutter/material.dart';
 import 'package:base/util/util.dart';
+import 'package:home/items/page_one.dart';
+import 'package:home/items/page_two.dart';
 import 'package:home/widget/banner_widget.dart';
 
 class HomeCard extends StatefulWidget {
@@ -46,6 +48,7 @@ class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
 
   int pageIndex = 0;
 
+  ///左上角第一个视图
   pageWidget() {
     if (isEmpty(homeItem.pagerItems)) {
       return Container(
@@ -58,13 +61,19 @@ class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
           children: <Widget>[
             PageView.builder(
               itemBuilder: (BuildContext context, int index) {
-                return ClipRRect(
-                  borderRadius: new BorderRadius.circular(8.0),
-                  child: Image.network(
-                    homeItem.pagerItems[index].imageUrl,
-                    fit: BoxFit.cover,
-                    height: 104,
+                return InkWell(
+                  child: ClipRRect(
+                    borderRadius: new BorderRadius.circular(8.0),
+                    child: Image.network(
+                      homeItem.pagerItems[index].imageUrl,
+                      fit: BoxFit.cover,
+                      height: 104,
+                    ),
                   ),
+                  onTap: () {
+                    Navigator.pushNamed(context, 'page/one',
+                        arguments: {'key1': 'value1'});
+                  },
                 );
               },
               itemCount: homeItem.pagerItems.length,
@@ -112,31 +121,35 @@ class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
       );
 
   plainWidgetChild(HomeHeadCommonBean item) => Expanded(
+        child: InkWell(
           child: ClipRRect(
-        borderRadius: new BorderRadius.circular(8.0),
-        child: new AspectRatio(
-          aspectRatio: 1,
-          child: Stack(
-            alignment: AlignmentDirectional.center,
-            children: <Widget>[
-              Image.network(
-                item?.imageUrl,
-                fit: BoxFit.cover,
-              ),
-              Text(item?.title,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 12)),
-            ],
-          ), //项目资源文件
+            borderRadius: new BorderRadius.circular(8.0),
+            child: new AspectRatio(
+              aspectRatio: 1,
+              child: Stack(
+                alignment: AlignmentDirectional.center,
+                children: <Widget>[
+                  Image.network(
+                    item?.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                  Text(item?.title,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                ],
+              ), //项目资源文件
+            ),
+          ),
+          onTap: () {
+            print('111111111111');
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return PageOne();
+            }));
+          },
         ),
-      ));
-
-  cardWidget() => Container(
-      height: 193,
-      child: Image.network(homeItem.cardItems[0]?.imageUrl),
-      margin: EdgeInsets.only(left: 5));
+      );
 
   Widget magicCard() {
     if (isEmpty(homeItem.cardItems)) {

@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:transparent_image/transparent_image.dart';
 
 class CircleDynamicItem extends StatefulWidget {
   final CircleDynamicBean dynamicBean;
@@ -54,9 +53,12 @@ class _CircleDynamicState extends State<CircleDynamicItem> {
           height: 46,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(userBean.avatarUrl ?? ""))),
+              color: Colors.grey,
+              image: isEmpty(userBean.avatarUrl)
+                  ? null
+                  : DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(userBean.avatarUrl))),
         ),
         Container(
           height: 1,

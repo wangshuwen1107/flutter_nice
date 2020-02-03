@@ -1,5 +1,7 @@
 import 'package:base/entity/circle/circle_dynamic_bean.dart';
 import 'package:base/entity/home/home_data.dart';
+import 'package:base/entity/request_data.dart';
+import 'package:base/request/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:base/util/util.dart';
 import 'package:home/items/home_banner_item.dart';
@@ -24,6 +26,8 @@ class _DingChaoPageState extends State<DingChaoPage> {
   static const int PAGE_TYPE = 1;
   static const int POST_TYPE = 2;
 
+  ScrollController _mController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -33,8 +37,13 @@ class _DingChaoPageState extends State<DingChaoPage> {
   @override
   Widget build(BuildContext context) {
     homeData = widget.homeData;
+//    _mController.addListener(() {
+//      print('---');
+//    });
     return Container(
-        color: Color(0xF7F7F9FF),
+      color: Color(0xF7F7F9FF),
+      child: RefreshIndicator(
+        onRefresh: getHomeData,
         child: ListView.builder(
           //shrinkWrap: true,
           itemCount: getItemCount(),
@@ -49,7 +58,18 @@ class _DingChaoPageState extends State<DingChaoPage> {
             }
             return null;
           },
-        ));
+          controller: _mController,
+        ),
+      ),
+    );
+  }
+
+  Future getHomeData() {
+    return HttpRequest.instance().post("/functions/home").then((response) {
+      setState(() {
+        homeData = HomeData.fromJson(response.data);
+      });
+    });
   }
 
   int getItemCount() {

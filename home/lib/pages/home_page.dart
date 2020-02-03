@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if(null==_homeData){
+    if (null == _homeData) {
       return Container();
     }
     return DefaultTabController(
@@ -96,9 +96,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getHomeData() {
-    HttpRequest.instance().post("/functions/home", (RequestData requestData) {
+    HttpRequest.instance().post("/functions/home").then((response) {
       setState(() {
-        _homeData = HomeData.fromJson(requestData.data);
+        _homeData = HomeData.fromJson(response.data);
       });
     });
   }

@@ -4,9 +4,8 @@ import 'package:base/request/post_request.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 
-typedef HttpCallback<T> = dynamic Function(RequestData<T> requestData);
-
 class HttpRequest {
+
   static const String BASE_URL = "https://api.dingstock.net";
 
   static HttpRequest _instance;
@@ -50,54 +49,42 @@ class HttpRequest {
     return _instance;
   }
 
-  void get<T>(String path, HttpCallback<T> callback,
-      [Map<String, dynamic> paramsMap]) {
+  void get (String path, [Map<String, dynamic> paramsMap]) {
     var future = GetRequest.form(path).enqueue();
-    request(future, callback);
+    request(future);
   }
 
-  void post<T>(String path, HttpCallback<T> callback,
+  Future post (String path,
       [Map<String, dynamic> paramsMap,
       Map<String, dynamic> bodyMap,
       String contentType]) {
     var future = PostRequest.form(path,
             paramsMap: paramsMap, bodyMap: bodyMap, contentType: contentType)
         .enqueue();
-    request(future, callback);
+    return request(future);
   }
 
-  void request<T>(Future<Response> future, HttpCallback<T> callback) {
-    future.then((Response response) {
+  Future request (Future<Response> future) {
+    return future.then((Response response) {
       if (response.statusCode < 200 || null == response.data) {
-        callback(RequestData(
+        throw RequestData(
             success: false,
             errorMsg: '${response.statusMessage}',
-            errorCode: '${response.statusCode}'));
+            errorCode: '${response.statusCode}');
       } else {
         var rootResult = response.data['result'];
         if (null == rootResult) {
-          callback(RequestData(
+          throw RequestData(
               success: false,
               errorCode: 'RESULT_EMPTY',
-              errorMsg: 'RESULT_EMPTY'));
+              errorMsg: 'RESULT_EMPTY');
         } else {
           var finallyResult = rootResult['result'];
-          callback(RequestData(success: true, data: finallyResult));
+          return RequestData(success: true, data: finallyResult);
         }
       }
     }).catchError((error) {
-      if (error is DioError) {
-        callback(RequestData(
-            success: false,
-            errorMsg: error.response.statusMessage,
-            errorCode: '${error.response.statusCode}'));
-      } else {
-        print('ERROR =' + error.toString());
-        callback(RequestData(
-            success: false,
-            errorMsg: error.toString(),
-            errorCode: error.toString()));
-      }
+      throw error;
     });
   }
 }
