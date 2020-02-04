@@ -53,12 +53,12 @@ class _DingChaoPageState extends State<DingChaoPage> {
             return null;
           },
           onLoadMore: loadMoreData,
-          onError: loadMoreData,
         ),
       ),
     );
   }
 
+  ///refresh or init page
   Future getHomeData() {
     return HomeApi.instance()
         .getHomeData()
@@ -67,20 +67,21 @@ class _DingChaoPageState extends State<DingChaoPage> {
             }));
   }
 
-  Future loadMoreData() {
+  ///load more data
+  Future<LoadMoreStatus> loadMoreData() {
     print('DingChao Home Load More  --------');
     return HomeApi.instance()
         .recommendPosts(homeData.posts?.nextKey)
-        .then((HomePostData data) => setState(() {
-              if (isEmpty(data.posts)) {
-                /// 加载到最后了~~ 待处理
-                return;
-              }
-              homeData.posts.posts.addAll(data.posts);
-              homeData.posts.nextKey = data.nextKey;
-            }));
+        .then((HomePostData data) {
+      setState(() {
+        homeData.posts.posts.addAll(data.posts);
+        homeData.posts.nextKey = data.nextKey;
+      });
+      return isEmpty(data.posts) ? LoadMoreStatus.done : LoadMoreStatus.idle;
+    });
   }
 
+  ///get item count && add entity into list
   int getItemCount() {
     if (isEmpty(homeData)) {
       return 0;

@@ -2,24 +2,20 @@ import 'package:base/constant/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef LoadMoreCallback = Future<void> Function();
-typedef LoadMoreErrorCallback = Future<void> Function();
+typedef LoadMoreCallback = Future<LoadMoreStatus> Function();
 
 class XListView extends StatefulWidget {
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
-  final LoadMoreCallback onError;
   final LoadMoreCallback onLoadMore;
 
   @override
   _XListViewState createState() => _XListViewState();
 
-  XListView({
-    @required this.itemBuilder,
-    this.onLoadMore,
-    this.itemCount = 0,
-    this.onError,
-  });
+  XListView(
+      {@required this.itemBuilder,
+      this.onLoadMore,
+      this.itemCount = 0});
 }
 
 enum LoadMoreStatus { idle, loading, done, error }
@@ -90,7 +86,7 @@ class _XListViewState extends State<XListView> {
       case LoadMoreStatus.error:
         contentView = InkWell(
           child: Text('加载出错~'),
-          onTap: _onErrorTap,
+          onTap: _onLoadMoreIng,
         );
         break;
     }
@@ -103,40 +99,23 @@ class _XListViewState extends State<XListView> {
   }
 
   _onLoadMoreIng() {
-    print('onloadmore  进入 status =${status.toString()}');
     if (status != LoadMoreStatus.loading) {
       print('onloadmore  ing ------------');
-      setState(() {
-        status = LoadMoreStatus.loading;
-      });
+      _changeStatus(LoadMoreStatus.loading);
       widget.onLoadMore()?.then((data) {
         print('onloadmore whenComplete ------------');
-        setState(() {
-          status = LoadMoreStatus.idle;
-        });
+        _changeStatus(data);
       })?.catchError((error) {
         print('onloadmore catchError ------------');
-        setState(() {
-          status = LoadMoreStatus.error;
-        });
+        _changeStatus(LoadMoreStatus.error);
       });
     }
   }
 
-  _onErrorTap() {
+  _changeStatus(newStatus) {
+    print('_changeStatus  status =${newStatus.toString()}');
     setState(() {
-      status = LoadMoreStatus.loading;
-    });
-    widget.onError()?.then((data) {
-      print('onError whenComplete ------------');
-      setState(() {
-        status = LoadMoreStatus.idle;
-      });
-    })?.catchError((error) {
-      print('onError catchError ------------');
-      setState(() {
-        status = LoadMoreStatus.error;
-      });
+      status = newStatus;
     });
   }
 }
