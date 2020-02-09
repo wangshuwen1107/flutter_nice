@@ -5,6 +5,7 @@ import 'circle_page.dart';
 import 'mine_page.dart';
 import 'compare_page.dart';
 import 'package:home/pages/home_page.dart';
+import 'package:base/router/native.router.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -24,16 +25,16 @@ class _IndexPageState extends State<IndexPage> {
   var currentPage;
 
   List<BottomNavigationBarItem> bottomTabList = [
-    _buildBarItem(
-        "首页", "assets/images/tabbar_home_light.png", "assets/images/tabbar_home_dark.png"),
+    _buildBarItem("首页", "assets/images/tabbar_home_light.png",
+        "assets/images/tabbar_home_dark.png"),
     _buildBarItem("监控", "assets/images/tabbar_monitoring_light.png",
         "assets/images/tabbar_monitoring_dark.png"),
     _buildBarItem("比价", "assets/images/tabbar_compare_light.png",
         "assets/images/tabbar_compare_dark.png"),
     _buildBarItem("圈子", "assets/images/tabbar_circle_light.png",
         "assets/images/tabbar_circle_dark.png"),
-    _buildBarItem(
-        "我的", "assets/images/tabbar_me_light.png", "assets/images/tabbar_me_dark.png")
+    _buildBarItem("我的", "assets/images/tabbar_me_light.png",
+        "assets/images/tabbar_me_dark.png")
   ];
 
   static _buildBarItem(
@@ -61,6 +62,7 @@ class _IndexPageState extends State<IndexPage> {
       currentIndex = index;
       currentPage = pageList[currentIndex];
     });
+    NativeRouter.route('https://app.dingstock.net/account/index');
   }
 
   @override

@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
               ),
               preferredSize: Size.fromHeight(50)),
-          body: DingChaoPage(_homeData),
+          body: TabBarView(children: getTabContentViewList()),
         ));
   }
 
@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
       if (i == 0) {
         viewList.add(DingChaoPage(_homeData));
       } else {
+        ///todo 球鞋日历 潮牌 发售
         viewList.add(Icon(Icons.directions_bike));
       }
     }
