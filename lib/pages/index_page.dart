@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'monitoring_page.dart';
 import 'circle_page.dart';
-import 'mine_page.dart';
+import 'package:mine/pages/mine_index_page.dart';
 import 'compare_page.dart';
 import 'package:home/pages/home_page.dart';
-import 'package:base/router/native.router.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -62,7 +61,6 @@ class _IndexPageState extends State<IndexPage> {
       currentIndex = index;
       currentPage = pageList[currentIndex];
     });
-    NativeRouter.route('https://app.dingstock.net/account/index');
   }
 
   @override

@@ -35,6 +35,20 @@ flutter:
     - assets/images/tabbar_circle_dark.png
     - assets/images/tabbar_me_light.png
     - assets/images/tabbar_me_dark.png
+    - assets/images/mine_about_us.png
+    - assets/images/mine_feedback.png
+    - assets/images/mine_focus_areas.png
+    - assets/images/mine_integral_balance.png
+    - assets/images/mine_integral_mall.png
+    - assets/images/mine_issue.png
+    - assets/images/mine_mall_bg.png
+    - assets/images/mine_mall_vip.png
+    - assets/images/mine_man.png
+    - assets/images/mine_online_service.png
+    - assets/images/mine_price.png
+    - assets/images/mine_woman.png
+
+    - assets/mine_item.json
 
   fonts:
     - family: iconfont

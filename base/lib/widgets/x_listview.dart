@@ -12,10 +12,7 @@ class XListView extends StatefulWidget {
   @override
   _XListViewState createState() => _XListViewState();
 
-  XListView(
-      {@required this.itemBuilder,
-      this.onLoadMore,
-      this.itemCount = 0});
+  XListView({@required this.itemBuilder, this.onLoadMore, this.itemCount = 0});
 }
 
 enum LoadMoreStatus { idle, loading, done, error }
@@ -38,10 +35,11 @@ class _XListViewState extends State<XListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.itemCount + 1,
+      itemCount:
+          null == widget.onLoadMore ? widget.itemCount : widget.itemCount + 1,
       controller: _mController,
       itemBuilder: (BuildContext context, int index) {
-        if (index == widget.itemCount) {
+        if (index == widget.itemCount && null != widget.onLoadMore) {
           return _buildLoadMoreItem();
         } else {
           return widget.itemBuilder(context, index);
