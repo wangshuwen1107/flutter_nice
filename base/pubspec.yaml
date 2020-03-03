@@ -14,6 +14,7 @@ dependencies:
   transparent_image: "^0.1.0"
   json_annotation: ^3.0.0
   intl: ^0.16.1
+  router_plugin: ^0.0.1
 
 dev_dependencies:
   flutter_test:

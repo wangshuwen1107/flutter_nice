@@ -11,7 +11,7 @@ packages:
   base:
     dependency: "direct main"
     description:
-      path: base
+      path: "../base"
       relative: true
     source: path
     version: "0.0.1"
@@ -29,13 +29,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.2"
-  circle:
-    dependency: "direct main"
-    description:
-      path: circle
-      relative: true
-    source: path
-    version: "0.0.1"
   collection:
     dependency: transitive
     description:
@@ -43,20 +36,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.14.11"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.1.3"
   dio:
     dependency: transitive
     description:
       name: dio
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.0.8"
+    version: "3.0.9"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -67,13 +53,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  home:
-    dependency: "direct main"
-    description:
-      path: home
-      relative: true
-    source: path
-    version: "0.0.1"
   http_parser:
     dependency: transitive
     description:
@@ -109,13 +88,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.7"
-  mine:
-    dependency: "direct main"
-    description:
-      path: mine
-      relative: true
-    source: path
-    version: "0.0.1"
   path:
     dependency: transitive
     description:

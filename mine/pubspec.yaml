@@ -1,5 +1,5 @@
-name: home
-description: home_module
+name: mine
+description: A  mine package.
 version: 0.0.1
 author:
 homepage:
@@ -12,15 +12,9 @@ dependencies:
     sdk: flutter
   base:
     path: ../base/
-  circle:
-    path: ../circle/
-
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.0.0
-  json_serializable: ^3.2.0
 
 flutter:
+
