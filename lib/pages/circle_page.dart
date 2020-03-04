@@ -5,7 +5,7 @@ class CirclePage extends StatefulWidget {
   _CirclePageState createState() => _CirclePageState();
 }
 
-class _CirclePageState extends State<CirclePage> {
+class _CirclePageState extends State<CirclePage>  {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -13,7 +13,7 @@ class IndexPage extends StatefulWidget {
 
 class _IndexPageState extends State<IndexPage> {
   static const bottomIconSize = 28.0;
-  List pageList = [
+  List<Widget> pageList = [
     HomePage(),
     MonitoringPage(),
     CirclePage(),
@@ -21,7 +21,7 @@ class _IndexPageState extends State<IndexPage> {
     MinePage()
   ];
   var currentIndex = 0;
-  var currentPage;
+  PageController _pageController;
 
   List<BottomNavigationBarItem> bottomTabList = [
     _buildBarItem("首页", "assets/images/tabbar_home_light.png",
@@ -53,13 +53,13 @@ class _IndexPageState extends State<IndexPage> {
   @override
   void initState() {
     super.initState();
-    currentPage = pageList[currentIndex];
+    this._pageController = PageController(initialPage: this.currentIndex);
   }
 
   onTabSelected(index) {
     setState(() {
       currentIndex = index;
-      currentPage = pageList[currentIndex];
+      this._pageController.jumpToPage(this.currentIndex);
     });
   }
 
@@ -73,7 +73,10 @@ class _IndexPageState extends State<IndexPage> {
         items: bottomTabList,
         onTap: onTabSelected,
       ),
-      body: currentPage,
+      body: PageView(
+        controller: this._pageController,
+        children: this.pageList,
+      ),
     );
   }
 }

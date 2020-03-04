@@ -10,7 +10,7 @@ class MinePage extends StatefulWidget {
   _MinePageState createState() => _MinePageState();
 }
 
-class _MinePageState extends State<MinePage> {
+class _MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin{
   List<MineItemBean> mineItems = [];
 
   @override
@@ -21,6 +21,7 @@ class _MinePageState extends State<MinePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: Column(
         children: <Widget>[topWidget(), listView()],
@@ -107,4 +108,7 @@ class _MinePageState extends State<MinePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -95,8 +95,6 @@ cd ${projectDir} # 回到项目
 rm -rf .android/Flutter/build
 flutter clean
 
-
-
 # step 2 package get
 echo 'packages get'
 cd ${projectDir} # 回到项目
@@ -134,6 +132,8 @@ fi
 addFatAArConfig
 
 # step 6 build aar ，生成 aar ， 然后上传到maven
+echo '替换 minSdkVersion 19'
+sed -i "" 's/minSdkVersion 16/minSdkVersion 19/g' ${projectDir}/.android/app/build.gradle
 echo 'build aar'
 cd ${projectDir}
 flutter build apk

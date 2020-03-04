@@ -1,12 +1,7 @@
 apply plugin: 'maven'
 
-// 这里不需要artifacts，uploadArchives命令会自动生成并上传./build/outputs/flutter-release.aar，不然出现下面错误
-// A POM cannot have multiple artifacts with the same type and classifier
-//artifacts {
-//    archives file('./build/outputs/flutter-release.aar')
-//}
-
-final def localMaven = "1".equals(CLOUND_MAVEN) //true: 发布到本地maven仓库， false： 发布到maven私服
+//true: 发布到本地maven仓库， false： 发布到maven私服
+final def localMaven = "1".equals(CLOUND_MAVEN)
 
 final def artGroupId = GROUP
 final def artVersion = VERSION_NAME
