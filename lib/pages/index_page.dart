@@ -21,7 +21,6 @@ class _IndexPageState extends State<IndexPage> {
     MinePage()
   ];
   var currentIndex = 0;
-  PageController _pageController;
 
   List<BottomNavigationBarItem> bottomTabList = [
     _buildBarItem("首页", "assets/images/tabbar_home_light.png",
@@ -53,13 +52,11 @@ class _IndexPageState extends State<IndexPage> {
   @override
   void initState() {
     super.initState();
-    this._pageController = PageController(initialPage: this.currentIndex);
   }
 
   onTabSelected(index) {
     setState(() {
       currentIndex = index;
-      this._pageController.jumpToPage(this.currentIndex);
     });
   }
 
@@ -73,9 +70,9 @@ class _IndexPageState extends State<IndexPage> {
         items: bottomTabList,
         onTap: onTabSelected,
       ),
-      body: PageView(
-        controller: this._pageController,
-        children: this.pageList,
+      body: IndexedStack(
+        index: currentIndex,
+        children: pageList,
       ),
     );
   }
