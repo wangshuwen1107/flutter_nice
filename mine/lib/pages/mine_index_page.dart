@@ -168,7 +168,7 @@ class _MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin{
                       Container(
                         margin: EdgeInsets.only(left: 5),
                         child: Text(
-                          "3",
+                          userInfo['integral'],
                           style: TextStyle(
                             fontSize: 12,
                             color: Color(0xFF373E4D),

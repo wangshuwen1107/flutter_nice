@@ -47,6 +47,8 @@ flutter:
     - assets/images/mine_online_service.png
     - assets/images/mine_price.png
     - assets/images/mine_woman.png
+    - assets/images/common_state_empty.png
+    - assets/images/common_state_error.png
 
     - assets/mine_item.json
 

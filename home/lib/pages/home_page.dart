@@ -2,6 +2,7 @@ import 'package:base/entity/home/home_data.dart';
 import 'package:flutter/material.dart';
 import 'home_dingchao_page.dart';
 import 'package:base/api/home_api.dart';
+import 'package:base/widgets/state/state_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,25 +18,33 @@ class _HomePageState extends State<HomePage> {
 
   HomeData _homeData;
 
+  Status status = Status.loading;
+
   @override
   Widget build(BuildContext context) {
-    if (null == _homeData) {
-      return Container();
-    }
-    return DefaultTabController(
-        length: getTabSize(),
-        child: Scaffold(
-          appBar: PreferredSize(
-              child: AppBar(
-                flexibleSpace: SafeArea(
-                  child: getTabContainer(),
+    return StateView(
+      status: status,
+      errorClick: () {
+        setState(() {
+          status = Status.loading;
+          getHomeData();
+        });
+      },
+      child: DefaultTabController(
+          length: getTabSize(),
+          child: Scaffold(
+            appBar: PreferredSize(
+                child: AppBar(
+                  flexibleSpace: SafeArea(
+                    child: getTabContainer(),
+                  ),
+                  backgroundColor: Color(0xFFF7F7F9),
+                  elevation: 0,
                 ),
-                backgroundColor: Color(0xFFF7F7F9),
-                elevation: 0,
-              ),
-              preferredSize: Size.fromHeight(50)),
-          body: TabBarView(children: getTabContentViewList()),
-        ));
+                preferredSize: Size.fromHeight(50)),
+            body: TabBarView(children: getTabContentViewList()),
+          )),
+    );
   }
 
   List<Widget> getTabContentViewList() {
@@ -90,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         unselectedLabelColor: Color(0xFF797F8C),
         labelStyle: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
         unselectedLabelStyle:
-        TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+            TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
       ),
     );
   }
@@ -99,8 +108,12 @@ class _HomePageState extends State<HomePage> {
     HomeApi.instance().getHomeData().then((data) {
       setState(() {
         _homeData = data;
+        status = Status.normal;
+      });
+    }).catchError((error) {
+      setState(() {
+        status = Status.error;
       });
     });
   }
-
 }

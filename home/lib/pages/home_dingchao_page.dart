@@ -17,10 +17,8 @@ class DingChaoPage extends StatefulWidget {
   DingChaoPage(this.homeData);
 }
 
-class _DingChaoPageState extends State<DingChaoPage>
-    with AutomaticKeepAliveClientMixin {
+class _DingChaoPageState extends State<DingChaoPage> {
   HomeData homeData;
-
   List<Map<String, dynamic>> itemList = [];
 
   static const int BANNER_TYPE = 0;
@@ -35,7 +33,6 @@ class _DingChaoPageState extends State<DingChaoPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     homeData = widget.homeData;
     return Container(
       color: Color(0xF7F7F9FF),
@@ -66,6 +63,8 @@ class _DingChaoPageState extends State<DingChaoPage>
         .getHomeData()
         .then((HomeData data) => setState(() {
               homeData = data;
+            }))
+        .catchError((error) => setState(() {
             }));
   }
 
@@ -108,7 +107,4 @@ class _DingChaoPageState extends State<DingChaoPage>
     print('itemCount = ${itemList.length}');
     return itemList.length;
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
