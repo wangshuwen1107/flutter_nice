@@ -2,6 +2,7 @@ import 'package:base/entity/home/home_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:base/util/util.dart';
 import 'package:home/widget/banner_widget.dart';
+import 'package:router_plugin/router_plugin.dart';
 
 class HomeBannerItem extends StatefulWidget {
   final List<HomeBanner> bannerItems;
@@ -29,7 +30,20 @@ class _HomeBannerState extends State<HomeBannerItem> {
     }
     return Container(
       margin: EdgeInsets.fromLTRB(12, 10, 12, 0),
-      child: BannerWidget(82, widgetList, hasPoint: true),
+      child: BannerWidget(
+        82,
+        widgetList,
+        hasPoint: true,
+        bannerPress: (int position) {
+          route(widget.bannerItems[position].targetUrl);
+        },
+      ),
     );
+  }
+
+  route(url) {
+    RouterPlugin.page(url).then((val) {
+      print("Banner Route url = $url result=$val");
+    });
   }
 }

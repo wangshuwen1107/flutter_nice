@@ -1,9 +1,8 @@
 import 'package:base/entity/home/home_data.dart';
 import 'package:flutter/material.dart';
 import 'package:base/util/util.dart';
-import 'package:home/items/page_one.dart';
-import 'package:home/items/page_two.dart';
 import 'package:home/widget/banner_widget.dart';
+import 'package:base/mixin/native_ability.dart';
 
 class HomeCard extends StatefulWidget {
   final HomeItem homeItem;
@@ -14,7 +13,8 @@ class HomeCard extends StatefulWidget {
   _HomeCardState createState() => _HomeCardState();
 }
 
-class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
+class _HomeCardState extends State<HomeCard>
+    with TickerProviderStateMixin, NativeRouter {
   HomeItem homeItem;
 
   @override
@@ -139,14 +139,11 @@ class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white, fontSize: 12)),
                 ],
-              ), //项目资源文件
+              ),
             ),
           ),
           onTap: () {
-            print('111111111111');
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return PageOne();
-            }));
+            nativeRoute(item.link);
           },
         ),
       );
@@ -212,6 +209,12 @@ class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
         ],
       ));
     }
-    return BannerWidget(193, widgetList);
+    return BannerWidget(
+      193,
+      widgetList,
+      bannerPress: (int pos) {
+        nativeRoute(homeItem.cardItems[pos].link);
+      },
+    );
   }
 }

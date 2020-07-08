@@ -8,13 +8,14 @@ import 'package:base/entity/mine/mine_item_bean.dart';
 import 'package:flutter/widgets.dart';
 import 'package:router_plugin/router_plugin.dart';
 import 'package:base/api/common_api.dart';
+import 'package:base/mixin/native_ability.dart';
 
 class MinePage extends StatefulWidget {
   @override
   _MinePageState createState() => _MinePageState();
 }
 
-class _MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin{
+class _MinePageState extends State<MinePage> with NativeEvent, NativeRouter {
   List<MineItemBean> mineItems = [];
 
 //  Map userInfo = {"infoDes": "会员已过期", "nickName": "Giao", "vipStatus": false};
@@ -25,11 +26,13 @@ class _MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin{
     super.initState();
     getMineItems();
     getUser();
+    enableTimer('loginChange', (val) {
+      getUser();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return SafeArea(
       child: Column(
         children: <Widget>[topWidget(), listView()],
@@ -168,7 +171,7 @@ class _MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin{
                       Container(
                         margin: EdgeInsets.only(left: 5),
                         child: Text(
-                          userInfo['integral'],
+                          "积分 ${userInfo['integral'].toInt()}" ?? "积分 0",
                           style: TextStyle(
                             fontSize: 12,
                             color: Color(0xFF373E4D),
@@ -272,23 +275,29 @@ class _MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin{
         children: <Widget>[
           Positioned(
             right: 72,
-            child: IconFont(
-              IconFonts.mineShare,
-              size: 20,
+            child: GestureDetector(
+              child: IconFont(
+                IconFonts.mineShare,
+                size: 20,
+              ),
+              onTap: () => nativeRoute("share/index", {
+                "title": "【盯潮APP】为核心潮流玩家而生",
+                "content": "最全面的发售日历，最及时的潮流监控，尽在盯潮APP",
+                "link": "https://weibo.com/dingstock?is_hot=1",
+              }),
             ),
           ),
           Positioned(
             right: 22,
-            child: IconFont(
-              IconFonts.setting,
-              size: 20,
-            ),
+            child: GestureDetector(
+                child: IconFont(
+                  IconFonts.setting,
+                  size: 20,
+                ),
+                onTap: () => nativeRoute("setting/index")),
           ),
         ],
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

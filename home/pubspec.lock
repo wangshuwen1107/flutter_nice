@@ -382,6 +382,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.5"
+  router_plugin:
+    dependency: transitive
+    description:
+      name: router_plugin
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.1"
   shelf:
     dependency: transitive
     description:
